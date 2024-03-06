@@ -16,7 +16,7 @@ exports.createSong = async (req, res) => {
     await song.save();
     res.json(song);
   } catch (error) {
-    res.status(500).json(error);
+    res.status(500).json(error.message);
   }
 };
 

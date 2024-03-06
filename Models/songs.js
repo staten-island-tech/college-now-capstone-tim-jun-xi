@@ -5,8 +5,18 @@ const songSchema = new mongoose.Schema({
     type: String,
     trim: true,
     required: "Please enter a song name",
+    unique: true,
   },
   slug: String,
+  artist: {
+    type: String,
+    trim: true,
+    required: "Please enter the song's artist",
+  },
+  release: {
+    type: Number,
+    required: "Please enter the release year",
+  },
   duration: {
     type: "String",
     trim: true,
@@ -19,7 +29,7 @@ songSchema.pre(`save`, function (next) {
     next();
     return;
   }
-  this.slug = slugify(this.name);
+  this.slug = slugify(this.name, { lower: true });
   next();
 });
 module.exports = mongoose.model("Song", songSchema);
