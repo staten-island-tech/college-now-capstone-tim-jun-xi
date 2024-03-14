@@ -7,9 +7,8 @@ const generateToken = async function (user) {
   const token = jwt.sign({ _id: user._id }, `${process.env.SECRET}`, {
     expiresIn: 60 * 60,
   });
-  /* user.tokens.push({ token });
-  await user.save(); */
-  // end commented code
+  user.tokens.push({ token });
+  await user.save(); 
 
   return token;
 };
