@@ -7,7 +7,7 @@ const songSchema = new mongoose.Schema({
     required: "Please enter a song name",
     unique: true,
   },
-  slug: String,
+  slug: String, 
   artist: {
     type: String,
     trim: true,
@@ -24,7 +24,7 @@ const songSchema = new mongoose.Schema({
   },
 });
 
-songSchema.pre(`save`, function (next) {
+songSchema.pre(`save`, function (next) { 
   if (!this.isModified("name")) {
     next();
     return;
