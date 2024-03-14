@@ -21,6 +21,7 @@ const UserSchema = new Schema({
     },
   ],
 });
+
 UserSchema.pre("save", async function (next) {
   const user = this;
   if (user.isModified("password")) {
@@ -29,6 +30,7 @@ UserSchema.pre("save", async function (next) {
 
   next();
 });
+
 UserSchema.methods.comparePassword = function (passw, cb) {
   bcrypt.compare(passw, this.password, function (err, isMatch) {
     if (err) {
@@ -37,3 +39,5 @@ UserSchema.methods.comparePassword = function (passw, cb) {
     cb(null, isMatch);
   });
 };
+
+module.exports = mongoose.model("User", UserSchema);
