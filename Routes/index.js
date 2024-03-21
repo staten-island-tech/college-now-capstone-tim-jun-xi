@@ -2,11 +2,13 @@ const express = require("express");
 const router = new express.Router();
 const songController = require("../Controllers/songController");
 const authController = require("../Controllers/authController");
+
 router.get("/", songController.getSongs);
 router.post("/add", songController.createSong);
-router.patch("/song/:id", songController.updateSongs);
-router.delete("/song/:id", songController.deleteSong);
+router.patch("/shop/:id", songController.updateSongs);
+router.delete("/shop/:id", songController.deleteSong);
 router.post("/register", authController.register);
 router.post("/login", authController.login);
-router.get("/protected", authController.authCheck, authController.protected);
+
 module.exports = router;
+

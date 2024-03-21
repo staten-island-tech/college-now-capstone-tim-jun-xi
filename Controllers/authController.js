@@ -7,12 +7,9 @@ const generateToken = async function (user) {
   const token = jwt.sign({ _id: user._id }, `${process.env.SECRET}`, {
     expiresIn: 60 * 60,
   });
-  /* user.tokens.push({ token });
-  await user.save(); */
-  // end commented code
-
   return token;
 };
+
 exports.register = async function (req, res) {
   if (!req.body.username || !req.body.password) {
     res.json({ success: false, msg: "Please pass username and password." });
@@ -24,6 +21,17 @@ exports.register = async function (req, res) {
     });
     const token = await generateToken(newUser);
     // save the user
+    /* newUser.save(function (err) {
+      if (err) {
+        return res.json({ success: false, msg: "Username already exists." });
+      }
+      res.json({
+        success: true,
+        msg: "Successful created new user.",
+        newUser,
+        token,
+      });
+    }); */
     await newUser.save();
     res.json({
       success: true,
@@ -33,6 +41,7 @@ exports.register = async function (req, res) {
     });
   }
 };
+
 exports.login = async (req, res) => {
   try {
     let username = req.body.username;
@@ -48,14 +57,14 @@ exports.login = async (req, res) => {
     if (!isMatch) {
       throw new Error("Unable to login");
     }
+    //DO NOT SEND BACK Password
 
     const infoReceived = {
       _id: user._id,
       username: user.username,
       tokens: user.tokens,
     };
-    res.send({ user: infoReceived, token });
-  } catch (error) {
+    res.send({ user: infoReceived, token });  } catch (error) {
     console.log(error);
     res.status(400).send("user not found");
   }
