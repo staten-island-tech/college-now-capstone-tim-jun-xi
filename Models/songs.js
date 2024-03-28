@@ -22,6 +22,11 @@ const songSchema = new mongoose.Schema({
     trim: true,
     required: "Please enter the song's duration",
   },
+  Cover: {
+    type:"String",
+    trim: true, 
+    required: "Please enter the link of the song's cover"
+  }
 });
 
 songSchema.pre(`save`, function (next) { 
