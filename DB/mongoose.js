@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 require("dotenv").config({ path: "variables.env" });
 
 mongoose
-  .connect(`mongodb+srv://junxic:siths@cluster0.yy2iwp6.mongodb.net/`, {
+  .connect(`${process.env.DATABASE}`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
