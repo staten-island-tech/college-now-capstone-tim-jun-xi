@@ -1,15 +1,25 @@
 <template>
-  <div class="about">
-    <h1>This is a playlist page</h1>
+  <div>
+
+<h1 v-for="song in songs">{{ song.name }}</h1>
+
   </div>
 </template>
 
-<style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
+<script setup>
+import { onMounted, ref } from "vue";
+const songs = ref("");
+async function getShops() {
+  let res = await fetch("http://localhost:3001");
+
+  let data = await res.json();
+  songs.value = data;
+  console.log(data);
 }
-</style>
+
+onMounted(() => {
+  getShops();
+});
+</script>
+
+<style scoped></style>
