@@ -1,58 +1,58 @@
 <template>
-    <div class="about">
-      <div class="logincard">
-        <form>
-  <div class="form-group">
-    <input v-model="username" class="form-control" id="firstName" name="firstName" placeholder="Username" required />
-    <label class="form-control-label" for="firstName"></label>
-  </div>
-  <div class="form-group">
-    <input v-model="password" class="form-control" id="lastName" name="lastName" placeholder="Password" required />
-    <label class="form-control-label" for="lastName"></label>
-  </div>
-  <button>Login</button>
-  <h2>My username is {{ username }}</h2>
-  <h2>My password is {{ password }}</h2> 
-    </form>
-        <h1 class="login">This is a Login page</h1> 
-      </div>
+  <div class="about">
+    <div class="logincard">
+      <form @submit.prevent="displayUser">
+        <div class="form-group">
+          <input v-model="username" class="form-control" id="firstName" name="firstName" placeholder="Username" required />
+          <label class="form-control-label" for="firstName"></label>
+        </div>
+        <div class="form-group">
+          <input v-model="password" class="form-control" id="lastName" name="lastName" placeholder="Password" required />
+          <label class="form-control-label" for="lastName"></label>
+        </div>
+        <button type="submit">Login</button>
+        <h2 v-if="displayMessage">{{ message }}</h2>
+      </form>
+      <h1 class="login">This is a Login page</h1> 
     </div>
-    <h2 id="loginRes"></h2>
-  </template>
+  </div>
+  <h2 id="loginRes"></h2>
+</template>
 
-<script>
-const form = document.querySelector("form-group");
-const loginRes = document.querySelector("loginRes");
+<script setup>
+import { ref } from 'vue'
 
-form.addEventListener("submit", function (e) {
-  e.preventDefault();
+const username = ref('')
+const password = ref('')
+const displayMessage = ref(false)
+const message = ref('')
 
-loginRes.res = `<span>${username}</span>`;
-});
-  </script>
+function displayUser() {
+  displayMessage.value = true;
+  message.value = `Your username is ${username.value} and your password is ${password.value}`;
+}
+</script>
 
-  <style scoped>
-  @media (min-width: 1024px) {
-    .about {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      text-align: center;
-    }
+<style scoped>
+@media (min-width: 1024px) {
+  .about {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    text-align: center;
   }
+}
 
-  .logincard{
-    background-color: green;
-    padding: 20px;
-    border-radius: 10px;
+.logincard {
+  background-color: green;
+  padding: 20px;
+  border-radius: 10px;
+}
 
-  }
+.login {
+}
 
-  .login{
-
-  }
-
-  .form-group {
+.form-group {
   position: relative;
   min-height: 3.5em;
 }
@@ -71,6 +71,4 @@ label.form-control-label {
   left: 5px;
   text-transform: uppercase;
 }
-  
-  </style>
-  
+</style>
