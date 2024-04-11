@@ -3,19 +3,34 @@
       <div class="logincard">
         <form>
   <div class="form-group">
-    <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Username" required />
+    <input v-model="username" class="form-control" id="firstName" name="firstName" placeholder="Username" required />
     <label class="form-control-label" for="firstName"></label>
   </div>
   <div class="form-group">
-    <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Password" required />
+    <input v-model="password" class="form-control" id="lastName" name="lastName" placeholder="Password" required />
     <label class="form-control-label" for="lastName"></label>
   </div>
+  <button>Login</button>
+  <h2>My username is {{ username }}</h2>
+  <h2>My password is {{ password }}</h2> 
     </form>
-        <h1 class="login">This is a Login page</h1>
+        <h1 class="login">This is a Login page</h1> 
       </div>
     </div>
+    <h2 id="loginRes"></h2>
   </template>
-  
+
+<script>
+const form = document.querySelector("form-group");
+const loginRes = document.querySelector("loginRes");
+
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
+
+loginRes.res = `<span>${username}</span>`;
+});
+  </script>
+
   <style scoped>
   @media (min-width: 1024px) {
     .about {
