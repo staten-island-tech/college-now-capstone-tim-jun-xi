@@ -32,29 +32,29 @@ exports.register = async function (req, res) {
 };
 exports.login = async (req, res) => {
   try {
-    let username = req.body.username;
-    let password = req.body.password;
+    const { username, password } = req.body;
     const user = await User.findOne({ username });
 
     if (!user) {
-      throw new Error("Unable to login");
+      throw new Error("User not found");
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
-    const token = await generateToken(user);
     if (!isMatch) {
-      throw new Error("Unable to login");
+      throw new Error("Invalid password");
     }
-    //DO NOT SEND BACK Password
+
+    const token = await generateToken(user);
 
     const infoReceived = {
       _id: user._id,
       username: user.username,
       tokens: user.tokens,
     };
-    res.send({ user: infoReceived, token });  } catch (error) {
-    console.log(error);
-    res.status(400).send("user not found");
+    res.json({ user: infoReceived, token });
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({ error: error.message });
   }
 };
 exports.authCheck = async (req, res, next) => {

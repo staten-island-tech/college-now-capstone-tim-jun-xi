@@ -31,16 +31,17 @@ function notLogin(username, password) {
 function change() {
   user = false;
 }
-async function login(username, password) {
+async function login() {
   try {
+    console.log(typeof username.value, typeof password.value);
     const res = await fetch("http://localhost:3001/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        username: username,
-        password: password,
+        username: username.value.toLowerCase(),
+        password: password.value,
       }),
     });
     const user = await res.json();
