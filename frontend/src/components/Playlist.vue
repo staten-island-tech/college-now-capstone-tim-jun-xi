@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     <div class ="container">
   
   <h1 class ="songs"v-for="song in songs">{{ song.name }}</h1>
@@ -128,4 +128,19 @@ main {
     }
   }
 }
-</style>
+</style> -->
+
+<template>
+  <ul>
+    <li v-for="item in order.MyPlaylist" :key="item">{{ item }}</li>
+  </ul>
+</template>
+
+<script setup>
+import { addToPlaylist } from '../stores/Playlist'
+const orderStore = addToPlaylist()
+//not needed
+const order = orderStore.order
+</script>
+
+<style scoped></style>

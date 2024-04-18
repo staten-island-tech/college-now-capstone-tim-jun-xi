@@ -41,7 +41,6 @@ async function login() {
     const user = await res.json();
     console.log(user);
     if (res.ok) {
-      localStorage.setItem("token", user.token);
       loggedInMessage.value = "You have successfully logged in!"; 
     }
     else {

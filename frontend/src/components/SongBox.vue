@@ -1,14 +1,27 @@
 <template>
   <div v-for="song in songs" :key="song.id">
     <h1 class="song">{{ song.name }}</h1>
-    <button @click="addToPlaylist()">Add to Playlist</button>
+    <!-- <button @click="addToPlaylist()">Add to Playlist</button> -->
   </div>
+  <input type="text" v-model="songChoice" />
+  <button @click="addPlaylist">Add To Playlist</button>
 </template>
 
 <script setup>
 import { onMounted, ref } from 'vue'
-// const songs = ref('')
-const playlist = ref([])
+import { addToPlaylist } from '../stores/Playlist'
+import MyPlaylist from '@/views/MyPlaylist.vue'
+
+const playlistStore = addToPlaylist()
+const songChoice = ref('')
+
+const addPlaylist = () => {
+  playlistStore.addSong(songChoice.value)
+  console.log(songChoice.value)
+  // songChoice.value = ''
+  console.log(MyPlaylist)
+}
+
 const songs = ref([])
 const songsID = ref([])
 
@@ -17,35 +30,31 @@ async function getSongs() {
   let data = await res.json()
   songs.value = data
   console.log(data)
-  songs.value.forEach(song => {
-      songsID.value.push(song._id);
-    });
 }
-
 onMounted(() => {
   getSongs()
 })
 
-async function addToPlaylist() {
-// console.log(playlist)
-console.log(songsID.value)
-  try {
-    const response = await fetch("http://localhost:3001/songs", {
-      method: "POST",
-      body: JSON.stringify({ songId: songsID.value }),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    });
+// function addToPlaylist() {
+// console.log(songsID.value)
+// console.log()
+// //   try {
+// //     const response = await fetch("http://localhost:3001/songs", {
+// //       method: "POST",
+// //       body: JSON.stringify({ songId: songsID.value }),
+// //       headers: {
+// //         "Content-Type": "application/json"
+// //       }
+// //     });
 
-    if (!response.ok) {
-      throw new Error("Failed to add song to playlist");
-    }
+// //     if (!response.ok) {
+// //       throw new Error("Failed to add song to playlist");
+// //     }
 
-} catch (error) {
-    console.error("Error adding song to playlist:", error);
-  }
-}
+// // } catch (error) {
+// //     console.error("Error adding song to playlist:", error);
+// //   }
+// }
 </script>
 
 <style scoped>
