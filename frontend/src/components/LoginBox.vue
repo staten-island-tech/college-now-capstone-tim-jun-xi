@@ -23,17 +23,9 @@ import { ref } from 'vue'
 
 const username = ref("");
 const password = ref("");
-const user = true;
-function notLogin(username, password) {
-  console.log(username);
-  console.log(password);
-}
-function change() {
-  user = false;
-}
+
 async function login() {
   try {
-    console.log(typeof username.value, typeof password.value);
     const res = await fetch("http://localhost:3001/login", {
       method: "POST",
       headers: {
@@ -46,15 +38,19 @@ async function login() {
     });
     const user = await res.json();
     console.log(user);
+    if (res.ok) {
+      localStorage.setItem("token", user.token)
+    }
+    else {
+      console.log("no works")
+    }
   } catch (error) {
     console.log(error);
   }
 }
 
-function displayUser() {
-  displayMessage.value = true;
-  message.value = `Your username is ${username.value} and your password is ${password.value}`;
-}
+
+
 </script>
 
 <style scoped>
