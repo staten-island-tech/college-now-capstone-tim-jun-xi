@@ -4,26 +4,43 @@ import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+      <div class="textbox">      
+        <HelloWorld msg="You did it!" />
+        <RouterView />
+      </div>
 
-      <nav>
+      <nav class="headerbar">
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/myplaylist">My Playlist</RouterLink>
         <RouterLink to="/songs">Songs</RouterLink>
         <RouterLink to="/explore">Explore Playlists</RouterLink>
         <RouterLink to="/login">Login</RouterLink>
       </nav>
-    </div>
-  </header>
 
-  <RouterView />
 </template>
 
 <style scoped>
+
+.app{
+  position: fixed;
+  display: block; 
+  top: 0px;
+}
+  
+.headerbar{
+  position:fixed;
+  display: block; 
+  top: 0px;
+}
+
+.textbox{
+  height: 90%;
+  width: 90%;
+  border: 3px solid #73AD21;
+  padding: 10px;
+}
+
 header {
   line-height: 1.5;
   max-height: 100vh;
