@@ -5,6 +5,7 @@ import HelloWorld from './components/HelloWorld.vue'
 
 <template>
 
+  <div class="bigbox">
       <div class="textbox">      
         <HelloWorld msg="You did it!" />
         <RouterView />
@@ -18,21 +19,30 @@ import HelloWorld from './components/HelloWorld.vue'
         <RouterLink to="/login">Login</RouterLink>
         <RouterLink to="/register">Register</RouterLink>
       </nav>
+    </div>
 
 </template>
 
 <style scoped>
 
+.bigbox{
+  max-width: 90%;
+  max-height: 90%;
+  flex-direction: column;
+}
+
 .app{
   position: fixed;
-  display: block; 
+  display: flex; 
   top: 0px;
+  flex-direction: column;
 }
   
 .headerbar{
   position:fixed;
-  display: block; 
+  display: flex; 
   top: 0px;
+  flex-direction: row;
 }
 
 .textbox{
@@ -40,6 +50,7 @@ import HelloWorld from './components/HelloWorld.vue'
   width: 90%;
   border: 3px solid #73AD21;
   padding: 10px;
+  flex-direction: column;
 }
 
 header {
