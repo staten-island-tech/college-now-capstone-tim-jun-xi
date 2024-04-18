@@ -1,4 +1,5 @@
 const Song = require("../Models/songs");
+const User = require("../Models/User");
 
 exports.homePage = async (req, res) => {
   const songs = ["KING", "suima", "Romance"];
@@ -50,5 +51,22 @@ exports.deleteSong = async (req, res) => {
     res.send(`${song.name} was deleted from the DB`);
   } catch (error) {
     console.log(error);
+  }
+};
+
+exports.addToPlaylist = async (req, res) => {
+  try {
+    const { songId } = req.body;
+
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    user.playlist.push(songId);
+    await user.save();
+    res.json({ message: "Song added to playlist successfully" });
+  } catch (error) {
+    console.error("Error adding song to playlist:", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 };

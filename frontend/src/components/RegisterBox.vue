@@ -1,58 +1,58 @@
 <template>
-    <div class="about">
-      <div class="registercard">
-        <form @submit.prevent="register">
-          <div class="form-group">
-            <input v-model="username" class="form-control" id="firstName" name="firstName" placeholder="Username" required />
-            <label class="form-control-label" for="firstName"></label>
-          </div>
-          <div class="form-group">
-            <input v-model="password" class="form-control" id="lastName" name="lastName" placeholder="Password" required />
-            <label class="form-control-label" for="lastName"></label>
-          </div>
-          <button type="submit">Register</button>
-        </form>
-        <h1 class="register">This is a register page</h1> 
-      </div>
+  <div class="about">
+    <div class="registercard">
+      <form @submit.prevent="register">
+        <div class="form-group">
+          <input v-model="username" class="form-control" id="firstName" name="firstName" placeholder="Username" required />
+          <label class="form-control-label" for="firstName"></label>
+        </div>
+        <div class="form-group">
+          <input v-model="password" class="form-control" id="lastName" name="lastName" placeholder="Password" required />
+          <label class="form-control-label" for="lastName"></label>
+        </div>
+        <button type="submit">Register</button>
+      </form>
+      <h1 class="register">This is a register page</h1> 
     </div>
-    <h2 id="registerRes"></h2>
-  </template>
-  
-  <script setup>
-  import { ref } from 'vue'
-  
-  const username = ref("");
-  const password = ref("");
-  
-  async function register() { 
-    try {
-      const res = await fetch("http://localhost:3001/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: username.value.toLowerCase(),
-          password: password.value,
-        }),
-      });
-      const user = await res.json();
-      console.log(user);
-      if (res.ok) {
-        localStorage.setItem("token", user.token)
-      }
-      else {
-        console.log("no works")
-      }
-    } catch (error) {
+    <div v-if="registrationSuccess" class="success-message">
+      Registration successful! You can now login with your username and password.
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+
+const username = ref("");
+const password = ref("");
+const registrationSuccess = ref(false);
+
+async function register() { 
+  try {
+    const res = await fetch("http://localhost:3001/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: username.value.toLowerCase(),
+        password: password.value,
+      }),
+    });
+    const user = await res.json();
+    console.log(user);
+    if (res.ok) {
+      localStorage.setItem("token", user.token);
+      registrationSuccess.value = true; 
+    } else {
       console.log(error);
     }
+  } catch (error) {
+    console.log(error);
   }
-  
-  
-  
-  </script>
-  
+}
+</script>
+
   <style scoped>
   @import url(https://fonts.googleapis.com/css?family=Roboto:300);
   

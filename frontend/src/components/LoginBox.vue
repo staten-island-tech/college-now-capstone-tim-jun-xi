@@ -13,6 +13,7 @@
         <button type="submit">Login</button>
       </form>
       <h1 class="login">This is a Login page</h1> 
+      <p v-if="loggedInMessage">{{ loggedInMessage }}</p> 
     </div>
   </div>
   <h2 id="loginRes"></h2>
@@ -23,6 +24,7 @@ import { ref } from 'vue'
 
 const username = ref("");
 const password = ref("");
+const loggedInMessage = ref(""); 
 
 async function login() {
   try {
@@ -39,7 +41,8 @@ async function login() {
     const user = await res.json();
     console.log(user);
     if (res.ok) {
-      localStorage.setItem("token", user.token)
+      localStorage.setItem("token", user.token);
+      loggedInMessage.value = "You have successfully logged in!"; 
     }
     else {
       console.log("no works")
@@ -48,9 +51,6 @@ async function login() {
     console.log(error);
   }
 }
-
-
-
 </script>
 
 <style scoped>
