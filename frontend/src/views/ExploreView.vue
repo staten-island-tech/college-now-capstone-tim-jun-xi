@@ -1,5 +1,5 @@
 <script setup>
-import SongBox from '../components/SongBox.vue'
+import Explore from '../components/Explore.vue'
 import { ref } from 'vue'
 import { useAuthStore } from '../stores/authStore'
 const authStore = useAuthStore()
@@ -8,7 +8,7 @@ const isAuthenticated = ref(authStore.isAuthenticated)
 
 <template>
   <main>
-    <SongBox v-if="isAuthenticated" />
+    <Explore v-if="isAuthenticated" />
     <p v-else>You must login before you access this part of the website</p>
   </main>
 </template>
