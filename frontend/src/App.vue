@@ -25,8 +25,7 @@ import HelloWorld from './components/HelloWorld.vue'
 <style scoped>
 
 .bigbox{
-  max-width: 90%;
-  max-height: 90%;
+  max-width: 100%;
   flex-direction: column;
 }
 
@@ -47,10 +46,12 @@ import HelloWorld from './components/HelloWorld.vue'
 }
 
 .textbox{
+  display: flex;
   height: 90%;
   border: 3px solid #73AD21;
   padding: 10px;
   flex-direction: column;
+  margin-top: 50px;
 }
 
 header {
