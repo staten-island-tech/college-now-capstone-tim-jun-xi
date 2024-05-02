@@ -1,25 +1,22 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 <template>
-
   <div class="bigbox">
-      <div class="textbox">      
-        <RouterView />
-      </div>
-
-      <nav class="headerbar">
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/myplaylist">My Playlist</RouterLink>
-        <RouterLink to="/songs">Songs</RouterLink>
-        <RouterLink to="/explore">Explore Playlists</RouterLink>
-        <RouterLink to="/login">Login</RouterLink>
-        <RouterLink to="/register">Register</RouterLink>
-      </nav>
+    <div class="textbox">
+      <RouterView />
     </div>
 
+    <nav class="headerbar">
+      <RouterLink to="/">Home</RouterLink>
+      <RouterLink to="/myplaylist">My Playlist</RouterLink>
+      <RouterLink to="/songs">Songs</RouterLink>
+      <RouterLink to="/explore">Explore Playlists</RouterLink>
+      <RouterLink to="/login">Login</RouterLink>
+      <RouterLink to="/register">Register</RouterLink>
+    </nav>
+  </div>
 </template>
 
 <style scoped>
@@ -29,16 +26,16 @@ import HelloWorld from './components/HelloWorld.vue'
   flex-direction: column;
 }
 
-.app{
+.app {
   position: fixed;
-  display: flex; 
+  display: flex;
   top: 0px;
   flex-direction: column;
 }
-  
-.headerbar{
-  position:absolute;
-  display: flex; 
+
+.headerbar {
+  position: absolute;
+  display: flex;
   top: 0px;
   flex-direction: row;
   align-items: center;
@@ -48,7 +45,7 @@ import HelloWorld from './components/HelloWorld.vue'
 .textbox{
   display: flex;
   height: 90%;
-  border: 3px solid #73AD21;
+  border: 3px solid #73ad21;
   padding: 10px;
   flex-direction: column;
   margin-top: 50px;
