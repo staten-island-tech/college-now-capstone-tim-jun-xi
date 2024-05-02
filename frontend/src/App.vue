@@ -7,7 +7,6 @@ import HelloWorld from './components/HelloWorld.vue'
 
   <div class="bigbox">
       <div class="textbox">      
-        <HelloWorld msg="You did it!" />
         <RouterView />
       </div>
 
@@ -39,15 +38,16 @@ import HelloWorld from './components/HelloWorld.vue'
 }
   
 .headerbar{
-  position:fixed;
+  position:absolute;
   display: flex; 
   top: 0px;
   flex-direction: row;
+  align-items: center;
+  text-align: center;
 }
 
 .textbox{
   height: 90%;
-  width: 90%;
   border: 3px solid #73AD21;
   padding: 10px;
   flex-direction: column;
@@ -80,7 +80,6 @@ nav a.router-link-exact-active:hover {
 
 nav a {
   display: inline-block;
-  padding: 0 1rem;
   border-left: 1px solid var(--color-border);
 }
 

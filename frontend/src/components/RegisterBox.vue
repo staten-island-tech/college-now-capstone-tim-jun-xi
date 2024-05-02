@@ -12,7 +12,6 @@
         </div>
         <button type="submit">Register</button>
       </form>
-      <h1 class="register">This is a register page</h1> 
     </div>
     <div v-if="registrationSuccess" class="success-message">
       Registration successful! You can now login with your username and password.
