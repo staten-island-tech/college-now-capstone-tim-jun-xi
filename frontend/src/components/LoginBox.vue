@@ -12,7 +12,6 @@
         </div>
         <button type="submit">Login</button>
       </form>
-      <h1 class="login">This is a Login page</h1>
       <p v-if="isAuthenticated">{{ "You have successfully logged in" }}</p>
     </div>
   </div>
