@@ -1,7 +1,7 @@
 <template>
   <div class="about">
     <div class="logincard">
-      <form @submit.prevent="login">
+      <form @submit.prevent="handleLogin">
         <div class="form-group">
           <input v-model="username" class="form-control" id="firstName" name="firstName" placeholder="Username" required />
           <label class="form-control-label" for="firstName"></label>
@@ -12,43 +12,25 @@
         </div>
         <button type="submit">Login</button>
       </form>
-      <h1 class="login">This is a Login page</h1> 
-      <p v-if="loggedInMessage">{{ loggedInMessage }}</p> 
+      <h1 class="login">This is a Login page</h1>
+      <p v-if="isAuthenticated">{{ "You have successfully logged in" }}</p>
     </div>
   </div>
   <h2 id="loginRes"></h2>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref } from 'vue';
+import { useAuthStore } from '../stores/authStore';
 
+const authStore = useAuthStore();
 const username = ref("");
 const password = ref("");
-const loggedInMessage = ref(""); 
+const isAuthenticated = ref(authStore.isAuthenticated);
 
-async function login() {
-  try {
-    const res = await fetch("http://localhost:3001/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username: username.value.toLowerCase(),
-        password: password.value,
-      }),
-    });
-    const user = await res.json();
-    console.log(user);
-    if (res.ok) {
-      loggedInMessage.value = "You have successfully logged in!"; 
-    }
-    else {
-      console.log("no works")
-    }
-  } catch (error) {
-    console.log(error);
-  }
+async function handleLogin() {
+  await authStore.login({ username: username.value, password: password.value });
+  isAuthenticated.value = authStore.isAuthenticated;
 }
 </script>
 
