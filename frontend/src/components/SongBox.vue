@@ -1,7 +1,7 @@
 <template>
   <div v-for="song in songs" :key="song.id">
     <h1 class="song">{{ song.name }}</h1>
-    <img class="cover" :src= "song.Cover" />
+    <img class="cover" :src="song.Cover" />
   </div>
   <input type="text" v-model="songChoice" />
   <button @click="addPlaylist">Add To Playlist</button>
@@ -10,19 +10,12 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import { addToPlaylist } from '../stores/Playlist'
-import MyPlaylist from '@/views/MyPlaylist.vue'
 
 const playlistStore = addToPlaylist()
 const songChoice = ref('')
-
-const addPlaylist = () => {
-  playlistStore.addSong(songChoice.value)
-  console.log(songChoice.value)
-  console.log(MyPlaylist)
-}
-
 const songs = ref([])
-const songsID = ref([])
+const songsName = []
+const songsCover = []
 
 async function getSongs() {
   let res = await fetch('http://localhost:3001')
@@ -34,26 +27,18 @@ onMounted(() => {
   getSongs()
 })
 
-// function addToPlaylist() {
-// console.log(songsID.value)
-// console.log()
-// //   try {
-// //     const response = await fetch("http://localhost:3001/songs", {
-// //       method: "POST",
-// //       body: JSON.stringify({ songId: songsID.value }),
-// //       headers: {
-// //         "Content-Type": "application/json"
-// //       }
-// //     });
-
-// //     if (!response.ok) {
-// //       throw new Error("Failed to add song to playlist");
-// //     }
-
-// // } catch (error) {
-// //     console.error("Error adding song to playlist:", error);
-// //   }
-// }
+const addPlaylist = () => {
+  console.log(songs._rawValue)
+  songs._rawValue.forEach((song) => songsName.push(song.name.toLowerCase()))
+  if (songsName.includes(songChoice.value.toLowerCase())) {
+    playlistStore.addSong(songChoice.value)
+    console.log('Success')
+  } else {
+    console.log(
+      'Error the song you entered does not match a song in our database. Check if the song is spelled correctly or if it exists in our database.'
+    )
+  }
+}
 </script>
 
 <style scoped>
@@ -168,7 +153,6 @@ main {
 }
 .cover {
   height: 5rem;
-  width: 5rem ;
+  width: 5rem;
 }
-
 </style>
