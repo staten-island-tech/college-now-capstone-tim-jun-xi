@@ -23,7 +23,7 @@ exports.createSong = async (req, res) => {
 
 exports.getSongs = async (req, res) => {
   try {
-    const Songs = await Song.find().limit(3);
+    const Songs = await Song.find();
     res.json(Songs);
   } catch (error) {
     console.log(error);

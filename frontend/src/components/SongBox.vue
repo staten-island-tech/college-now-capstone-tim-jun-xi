@@ -1,7 +1,7 @@
 <template>
   <div v-for="song in songs" :key="song.id">
     <h1 class="song">{{ song.name }}</h1>
-    <!-- <button @click="addToPlaylist()">Add to Playlist</button> -->
+    <img class="cover" :src= "song.Cover" />
   </div>
   <input type="text" v-model="songChoice" />
   <button @click="addPlaylist">Add To Playlist</button>
@@ -18,7 +18,6 @@ const songChoice = ref('')
 const addPlaylist = () => {
   playlistStore.addSong(songChoice.value)
   console.log(songChoice.value)
-  // songChoice.value = ''
   console.log(MyPlaylist)
 }
 
@@ -167,4 +166,9 @@ main {
     }
   }
 }
+.cover {
+  height: 5rem;
+  width: 5rem ;
+}
+
 </style>
