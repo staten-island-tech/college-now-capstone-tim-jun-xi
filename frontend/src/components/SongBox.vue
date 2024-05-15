@@ -14,145 +14,141 @@ import { addToPlaylist } from '../stores/Playlist'
 const playlistStore = addToPlaylist()
 const songChoice = ref('')
 const songs = ref([])
-const songsName = []
-const songsCover = []
 
 async function getSongs() {
   let res = await fetch('http://localhost:3001')
   let data = await res.json()
   songs.value = data
-  console.log(data)
 }
+
 onMounted(() => {
   getSongs()
 })
 
 const addPlaylist = () => {
-  console.log(songs._rawValue)
-  songs._rawValue.forEach((song) => songsName.push(song.name.toLowerCase()))
-  if (songsName.includes(songChoice.value.toLowerCase())) {
-    playlistStore.addSong(songChoice.value)
-    console.log('Success')
+  const song = songs.value.find(s => s.name.toLowerCase() === songChoice.value.toLowerCase())
+  if (song) {
+    playlistStore.addSong({ name: song.name, cover: song.Cover })
+    alert('Success!')
   } else {
-    console.log(
-      'Error the song you entered does not match a song in our database. Check if the song is spelled correctly or if it exists in our database.'
-    )
+    alert('Error: the song you entered does not match a song in our database. Check if the song is spelled correctly or if it exists in our database.')
   }
+  songChoice.value = ''
 }
 </script>
 
-<style scoped>
-/*** FONTS ***/
-@import url(https://fonts.googleapis.com/css?family=Montserrat:900|Raleway:400,400i,700,700i);
+  <style scoped>
+  /*** FONTS ***/
+  @import url(https://fonts.googleapis.com/css?family=Montserrat:900|Raleway:400,400i,700,700i);
 
-/*** VARIABLES ***/
-/* Colors */
-$black: #1d1f20;
-$blue: #83e4e2;
-$green: #a2ed56;
-$yellow: #fddc32;
-$white: #fafafa;
+  /*** VARIABLES ***/
+  /* Colors */
+  $black: #1d1f20;
+  $blue: #83e4e2;
+  $green: #a2ed56;
+  $yellow: #fddc32;
+  $white: #fafafa;
 
-/*** EXTEND ***/
-/* box-shadow */
-%boxshadow {
-  box-shadow:
-    0.25rem 0.25rem 0.6rem rgba(0, 0, 0, 0.05),
-    0 0.5rem 1.125rem rgba(75, 0, 0, 0.05);
-}
+  /*** EXTEND ***/
+  /* box-shadow */
+  %boxshadow {
+    box-shadow:
+      0.25rem 0.25rem 0.6rem rgba(0, 0, 0, 0.05),
+      0 0.5rem 1.125rem rgba(75, 0, 0, 0.05);
+  }
 
-/*** STYLE ***/
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
-}
+  /*** STYLE ***/
+  *,
+  *:before,
+  *:after {
+    box-sizing: border-box;
+  }
 
-html,
-body {
-  margin: 0;
-  padding: 0;
-}
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+  }
 
-body {
-  background-color: $white;
-  color: $black;
-  font-family: 'Raleway', sans-serif;
-}
+  body {
+    background-color: $white;
+    color: $black;
+    font-family: 'Raleway', sans-serif;
+  }
 
-main {
-  display: block;
-  margin: 0 auto;
-  max-width: 40rem;
-  padding: 1rem;
-}
+  main {
+    display: block;
+    margin: 0 auto;
+    max-width: 40rem;
+    padding: 1rem;
+  }
 
-.songs {
-  background-color: aquamarine;
-}
-
-.container {
-  counter-reset: gradient-counter;
-  list-style: none;
-  margin: 1.75rem 0;
-  padding-left: 1rem;
   .songs {
-    background: white;
-    border-radius: 0 0.5rem 0.5rem 0.5rem;
-    @extend %boxshadow;
-    counter-increment: gradient-counter;
-    margin-top: 1rem;
-    min-height: 3rem;
-    padding: 1rem 1rem 1rem 3rem;
-    position: relative;
-    &::before,
-    &::after {
-      background: linear-gradient(135deg, $blue 0%, $green 100%);
-      border-radius: 1rem 1rem 0 1rem;
-      content: '';
-      height: 3rem;
-      left: -1rem;
-      overflow: hidden;
-      position: absolute;
-      top: -1rem;
-      width: 3rem;
-    }
-    &::before {
-      align-items: flex-end;
+    background-color: aquamarine;
+  }
+
+  .container {
+    counter-reset: gradient-counter;
+    list-style: none;
+    margin: 1.75rem 0;
+    padding-left: 1rem;
+    .songs {
+      background: white;
+      border-radius: 0 0.5rem 0.5rem 0.5rem;
       @extend %boxshadow;
-      content: counter(gradient-counter);
-      color: $black;
-      display: flex;
-      font: 900 1.5em/1 'Montserrat';
-      justify-content: flex-end;
-      padding: 0.125em 0.25em;
-      z-index: 1;
-    }
-    @for $i from 1 through 5 {
-      &:nth-child(10n + #{$i}):before {
-        background: linear-gradient(
-          135deg,
-          rgba($green, $i * 0.2) 0%,
-          rgba($yellow, $i * 0.2) 100%
-        );
+      counter-increment: gradient-counter;
+      margin-top: 1rem;
+      min-height: 3rem;
+      padding: 1rem 1rem 1rem 3rem;
+      position: relative;
+      &::before,
+      &::after {
+        background: linear-gradient(135deg, $blue 0%, $green 100%);
+        border-radius: 1rem 1rem 0 1rem;
+        content: '';
+        height: 3rem;
+        left: -1rem;
+        overflow: hidden;
+        position: absolute;
+        top: -1rem;
+        width: 3rem;
       }
-    }
-    @for $i from 6 through 10 {
-      &:nth-child(10n + #{$i}):before {
-        background: linear-gradient(
-          135deg,
-          rgba($green, 1 - (($i - 5) * 0.2)) 0%,
-          rgba($yellow, 1 - (($i - 5) * 0.2)) 100%
-        );
+      &::before {
+        align-items: flex-end;
+        @extend %boxshadow;
+        content: counter(gradient-counter);
+        color: $black;
+        display: flex;
+        font: 900 1.5em/1 'Montserrat';
+        justify-content: flex-end;
+        padding: 0.125em 0.25em;
+        z-index: 1;
       }
-    }
-    + .songs {
-      margin-top: 2rem;
+      @for $i from 1 through 5 {
+        &:nth-child(10n + #{$i}):before {
+          background: linear-gradient(
+            135deg,
+            rgba($green, $i * 0.2) 0%,
+            rgba($yellow, $i * 0.2) 100%
+          );
+        }
+      }
+      @for $i from 6 through 10 {
+        &:nth-child(10n + #{$i}):before {
+          background: linear-gradient(
+            135deg,
+            rgba($green, 1 - (($i - 5) * 0.2)) 0%,
+            rgba($yellow, 1 - (($i - 5) * 0.2)) 100%
+          );
+        }
+      }
+      + .songs {
+        margin-top: 2rem;
+      }
     }
   }
-}
-.cover {
-  height: 5rem;
-  width: 5rem;
-}
-</style>
+  .cover {
+    height: 5rem;
+    width: 5rem;
+  }
+  </style>
