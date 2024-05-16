@@ -1,10 +1,9 @@
 <template>
-  <ul>
+    <div> Add songs to your playlist here!</div>
     <div v-for="item in order.MyPlaylist" :key="item.name">
       <h1>{{ item.name }}</h1>
       <img :src="item.cover" alt="cover" class="cover" />
     </div>
-  </ul>
 </template>
 
 <script setup>

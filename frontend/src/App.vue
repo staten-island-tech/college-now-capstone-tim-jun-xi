@@ -33,21 +33,24 @@ import { RouterLink, RouterView } from 'vue-router'
 }
 
 .headerbar {
-  position: absolute;
+  position: fixed;
+  top: 0; 
+  right: 0%;
   display: flex;
-  top: 0px;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
   text-align: center;
 }
 
 .textbox {
   display: flex;
   height: 90%;
-  /* border: 3px solid #73ad21; */
-  padding: 10px;
+justify-content: space-between;  padding: 10px;
   flex-direction: column;
   margin-top: 50px;
+  width: 50rem;
+  align-items: center;
 }
 
 header {
