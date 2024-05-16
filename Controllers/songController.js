@@ -56,17 +56,17 @@ exports.deleteSong = async (req, res) => {
 
 exports.addToPlaylist = async (req, res) => {
   try {
-    const { songId } = req.body;
-
-    const user = await User.findById(req.user.id);
+    const { playlist } = req.body;
+    const userId = req.user.id;
+    const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    user.playlist.push(songId);
+    user.playlist = playlist;
     await user.save();
-    res.json({ message: "Song added to playlist successfully" });
+    res.json({ message: "Playlist saved successfully" });
   } catch (error) {
-    console.error("Error adding song to playlist:", error);
+    console.error("Error saving playlist:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };

@@ -11,22 +11,38 @@ const generateToken = async function (user) {
 };
 
 exports.register = async function (req, res) {
-  if (!req.body.username || !req.body.password) {
-    res.json({ success: false, msg: "Please pass username and password." });
-  } else {
-    console.log(req.body.password);
-    var newUser = new User({
+  try {
+    if (!req.body.username || !req.body.password) {
+      return res
+        .status(400)
+        .json({ success: false, msg: "Please pass username and password." });
+    }
+    const existingUser = await User.findOne({ username: req.body.username });
+    if (existingUser) {
+      alert("Username is already taken. Please choose another one.");
+      return res.status(400).json({
+        success: false,
+        msg: "Username is already taken. Please choose another one.",
+      });
+    }
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    const newUser = new User({
       username: req.body.username,
-      password: req.body.password,
+      password: hashedPassword,
     });
     const token = await generateToken(newUser);
-    // save the user
     await newUser.save();
-    res.json({
+    res.status(201).json({
       success: true,
-      msg: "Successful created new user.",
+      msg: "Successfully created new user.",
       newUser,
       token,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      msg: "Failed to register user.",
+      error: err.message,
     });
   }
 };
@@ -69,7 +85,7 @@ exports.authCheck = async (req, res, next) => {
       throw new Error();
     }
     req.token = token;
-    req.user = user; //route hanlder now will not have to fetch the user account
+    req.user = user;
     next();
   } catch (e) {
     res.status(401).send({ error: "Please authenticate." });
