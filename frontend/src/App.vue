@@ -20,8 +20,7 @@ import { RouterLink, RouterView } from 'vue-router'
 </template>
 
 <style scoped>
-
-.bigbox{
+.bigbox {
   max-width: 100%;
   flex-direction: column;
 }
@@ -42,7 +41,7 @@ import { RouterLink, RouterView } from 'vue-router'
   text-align: center;
 }
 
-.textbox{
+.textbox {
   display: flex;
   height: 90%;
   border: 3px solid #73ad21;
