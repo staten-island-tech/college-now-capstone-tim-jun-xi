@@ -44,7 +44,7 @@ import { RouterLink, RouterView } from 'vue-router'
 .textbox {
   display: flex;
   height: 90%;
-  border: 3px solid #73ad21;
+  /* border: 3px solid #73ad21; */
   padding: 10px;
   flex-direction: column;
   margin-top: 50px;
