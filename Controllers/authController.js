@@ -66,6 +66,7 @@ exports.login = async (req, res) => {
       _id: user._id,
       username: user.username,
       tokens: user.tokens,
+      playlist: user.playlist,
     };
     res.json({ user: infoReceived, token });
   } catch (error) {

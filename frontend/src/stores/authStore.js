@@ -4,7 +4,8 @@ export const useAuthStore = defineStore({
   id: 'auth',
   state: () => ({
     isAuthenticated: false,
-    isRegistered: false
+    isRegistered: false,
+    user: null
   }),
   actions: {
     async login({ username, password }) {
@@ -19,10 +20,10 @@ export const useAuthStore = defineStore({
             password: password
           })
         })
-        const user = await res.json()
-        console.log(user)
+        const data = await res.json()
         if (res.ok) {
           this.isAuthenticated = true
+          this.user = data.user
         } else {
           console.log('Login failed')
         }
@@ -43,7 +44,6 @@ export const useAuthStore = defineStore({
           })
         })
         const data = await res.json()
-        console.log(data)
         if (res.ok && data.success) {
           this.isRegistered = true
         } else {
@@ -53,6 +53,10 @@ export const useAuthStore = defineStore({
       } catch (error) {
         console.log(error)
       }
+    },
+    logout() {
+      this.isAuthenticated = false
+      this.user = null
     }
   }
 })

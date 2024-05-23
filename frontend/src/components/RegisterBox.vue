@@ -7,7 +7,7 @@
           <label class="form-control-label" for="registerUsername"></label>
         </div>
         <div class="form-group">
-          <input v-model="password" type="password" class="form-control" id="registerPassword" name="registerPassword" placeholder="Password" required />
+          <input v-model="password" class="form-control" id="registerPassword" name="registerPassword" placeholder="Password" required />
           <label class="form-control-label" for="registerPassword"></label>
         </div>
         <button type="submit">Register</button>
