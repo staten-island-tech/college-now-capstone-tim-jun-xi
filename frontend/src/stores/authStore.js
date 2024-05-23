@@ -4,8 +4,8 @@ export const useAuthStore = defineStore({
   id: 'auth',
   state: () => ({
     isAuthenticated: false,
-    isRegistered: false,
-    user: null
+    user: null,
+    playlist: []
   }),
   actions: {
     async login({ username, password }) {
@@ -15,15 +15,13 @@ export const useAuthStore = defineStore({
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({
-            username: username.toLowerCase(),
-            password: password
-          })
+          body: JSON.stringify({ username, password })
         })
         const data = await res.json()
         if (res.ok) {
           this.isAuthenticated = true
           this.user = data.user
+          this.playlist = data.user.playlist
         } else {
           console.log('Login failed')
         }
@@ -35,13 +33,8 @@ export const useAuthStore = defineStore({
       try {
         const res = await fetch('http://localhost:3001/register', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            username: username.toLowerCase(),
-            password: password
-          })
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
         })
         const data = await res.json()
         if (res.ok && data.success) {
@@ -54,9 +47,27 @@ export const useAuthStore = defineStore({
         console.log(error)
       }
     },
-    logout() {
-      this.isAuthenticated = false
-      this.user = null
+    async addSongToPlaylist(songId) {
+      if (!this.isAuthenticated) return
+
+      try {
+        const res = await fetch('http://localhost:3001/playlist', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${this.user.token}` // Send token for authentication
+          },
+          body: JSON.stringify({ songId, username: this.user.username }) // Send username with the request
+        })
+        const data = await res.json()
+        if (res.ok) {
+          this.playlist = data.playlist
+        } else {
+          console.log('Failed to add song to playlist')
+        }
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 })

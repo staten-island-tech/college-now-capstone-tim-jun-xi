@@ -25,10 +25,9 @@ exports.register = async function (req, res) {
         msg: "Username is already taken. Please choose another one.",
       });
     }
-    const hashedPassword = await bcrypt.hash(req.body.password, 10);
     const newUser = new User({
       username: req.body.username,
-      password: hashedPassword,
+      password: req.body.password,
     });
     const token = await generateToken(newUser);
     await newUser.save();

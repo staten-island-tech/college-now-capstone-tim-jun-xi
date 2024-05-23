@@ -56,9 +56,12 @@ exports.deleteSong = async (req, res) => {
 
 exports.addToPlaylist = async (req, res) => {
   try {
-    const { songId } = req.body;
-    const userId = req.user._id;
-    const user = await User.findById(userId);
+    const { songId, username } = req.body;
+    if (!username) {
+      return res.status(400).json({ message: "Username is required" });
+    }
+
+    const user = await User.findOne({ username });
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
