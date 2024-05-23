@@ -12,7 +12,7 @@ import { RouterLink, RouterView } from 'vue-router'
       <RouterLink to="/">Home</RouterLink>
       <RouterLink to="/myplaylist">My Playlist</RouterLink>
       <RouterLink to="/songs">Songs</RouterLink>
-      <RouterLink to="/explore">Explore Playlists</RouterLink>
+      <RouterLink to="/explore">Add Songs</RouterLink>
       <RouterLink to="/login">Login</RouterLink>
       <RouterLink to="/register">Register</RouterLink>
     </nav>
@@ -34,7 +34,7 @@ import { RouterLink, RouterView } from 'vue-router'
 
 .headerbar {
   position: fixed;
-  top: 0; 
+  top: 0;
   right: 0%;
   display: flex;
   flex-direction: row;
@@ -46,7 +46,8 @@ import { RouterLink, RouterView } from 'vue-router'
 .textbox {
   display: flex;
   height: 90%;
-justify-content: space-between;  padding: 10px;
+  justify-content: space-between;
+  padding: 10px;
   flex-direction: column;
   margin-top: 50px;
   width: 50rem;
