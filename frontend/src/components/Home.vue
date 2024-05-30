@@ -1,18 +1,22 @@
 <script setup>
-defineProps({
-  msg: {
-    type: String,
-    required: true
-  }
-})
+import { ref } from 'vue';
+import { useAuthStore } from '../stores/authStore';
+import { useRouter } from 'vue-router';
+
+const router = useRouter()
+const authStore = useAuthStore();
+const isAuthenticated = ref(authStore.isAuthenticated);
+const Logout = () => {
+  authStore.logout();
+  isAuthenticated.value = authStore.isAuthenticated;
+  router.push({ name: 'login' });
+};
 </script>
 
 <template>
   <div class="greetings">
-    <h1 class="green">{{ msg }}</h1>
-    <h3>
-      Welcome to Monkey Radios. Find and stream all of your favorite pirated songs here!
-    </h3>
+    <h3>Welcome to Monkey Radios. Find and stream all of your favorite pirated songs here!</h3>
+    <button v-if="isAuthenticated" @click="Logout">Logout</button>
   </div>
 </template>
 

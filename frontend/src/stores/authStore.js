@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { useRouter } from 'vue-router'
 
 export const useAuthStore = defineStore({
   id: 'auth',
@@ -68,6 +69,10 @@ export const useAuthStore = defineStore({
       } catch (error) {
         console.log(error)
       }
+    },
+    logout() {
+      this.isAuthenticated = false
+      this.user = null
     }
   }
 })
